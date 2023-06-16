@@ -1,0 +1,15 @@
+{
+  "name": "coders-quiz-app",
+  "version": "1.0.0",
+  "description": "Quiz app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "quiz",
+    "app"
+  ],
+  "author": "Adam Kwoka",
+  "license": "ISC"
+}
