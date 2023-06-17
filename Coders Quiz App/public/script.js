@@ -6,6 +6,7 @@ const subTitle = document.querySelector('h2');
 const callToAFriendButton = document.querySelector('.callToFriend');
 const fiftyFiftyButton = document.querySelector('.fiftyFifty');
 const hintElement = document.querySelector('.hint');
+const questionToCrowdButton = document.querySelector('.askTheCrowd');
 
 const fillQuestionElements = ({ question, answers, winner, looser }) => {
   if (winner) {
@@ -87,7 +88,6 @@ const handleFiftyFiftyAnswer = ({ message, answersToRemove }) => {
   }
 }
 
-
 const fiftyFifty = async () => {
   const response = await fetch('/help/fifty', {
     method: 'GET',
@@ -98,5 +98,26 @@ const fiftyFifty = async () => {
 }
 
 fiftyFiftyButton.addEventListener('click', fiftyFifty);
+
+const handleQuestionToCrowd = ({ message, charts }) => {
+  if ( typeof message === 'string' ) {
+    handleHint({ message });
+  } else {
+    charts.forEach((chart, index) => {
+      answerElements[index].innerText += `: ${chart}%` 
+    })
+  }
+}
+
+const questionToCrowd = async () => {
+  const response = await fetch('/help/crowd', {
+    method: 'GET',
+  })
+  const data = await response.json();
+  
+  handleQuestionToCrowd(data)
+}
+
+questionToCrowdButton.addEventListener('click', questionToCrowd);
 
 showNextQuestion()

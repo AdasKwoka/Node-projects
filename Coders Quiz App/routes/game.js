@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const calcCharts = require('../utils/calcCharts')
 
 const gameRoutes = (app) => {
   let goodAnswers = 0;
@@ -72,7 +73,6 @@ const gameRoutes = (app) => {
   })
 
   app.get('/help/fifty', (req, res) => {
-
     if (fiftyFiftyUsed) {
       return res.json({
         message: 'This helper was used'
@@ -89,9 +89,26 @@ const gameRoutes = (app) => {
       answersToRemove: wrongAnswers
     })
   })
+
+  app.get('/help/crowd', (req, res) => {
+    if (questionToTheCrowdUsed) {
+      return res.json({
+        message: 'This helper was used'
+      })
+    }
+
+    questionToTheCrowdUsed = true;
+  
+    const charts = calcCharts();
+
+    const { correctAnswer } = questions[goodAnswers];
+
+    [charts[3], charts[correctAnswer]] = [charts[correctAnswer], charts[3]];
+
+    res.json({
+      charts,
+    })
+  })
 }
-
-
-
 
 module.exports = gameRoutes;
