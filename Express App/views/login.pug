@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  form(method='post')
+    p
+      label(for="login") Login:
+      br
+      input(type="text" name="login" id="login")
+    p
+      label(for="pass") Password:
+      br
+      input(type="password" name="pass" id="pass")
+    p 
+      input(type="submit", value="Login")
